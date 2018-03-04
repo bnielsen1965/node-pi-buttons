@@ -1,0 +1,25 @@
+{
+  "name": "node-pi-buttons",
+  "version": "1.0.0",
+  "description": "Node module used with the low level pi-buttons service for button events.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bnielsen1965/node-pi-buttons.git"
+  },
+  "keywords": [
+    "gpio",
+    "buttons",
+    "events",
+    "pi-buttons"
+  ],
+  "author": "Bryan Nielsen <bnielsen1965@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bnielsen1965/node-pi-buttons/issues"
+  },
+  "homepage": "https://github.com/bnielsen1965/node-pi-buttons#readme"
+}
