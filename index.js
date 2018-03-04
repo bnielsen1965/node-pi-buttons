@@ -38,8 +38,16 @@ module.exports = function (config) {
     if (parts) {
       try {
         var d = JSON.parse(parts[2]);
-        // emit event with event type, gpio number, event JSON data
-        emitter.emit(parts[1], d.gpio, d);
+        switch(parts[1]) {
+          case 'error':
+          emitter.emit(parts[1], d);
+          break;
+
+          default:
+          // emit event with event type, gpio number, event JSON data
+          emitter.emit(parts[1], d.gpio, d);
+          break;
+        }
       }
       catch (e) {}
     }
