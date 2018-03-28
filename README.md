@@ -1,26 +1,37 @@
 # node-pi-buttons
-A node module that listens to the pi-buttons event service and emits events for
-use in a node application.
+A node module that listens to the [pi-buttons](https://github.com/bnielsen1965/pi-buttons.git)
+event service and emits events for use in a node application.
+
+> NOTE: You must have the pi-buttons service installed and running before you can
+use the node-pi-buttons module!
 
 The pi-buttons project is a low level service written in C that emits button
 events on a Unix socket for GPIO pins with button hardware. The node-pi-buttons
 module provides a ready made nodejs interface to the pi-buttons service.
 
-https://github.com/bnielsen1965/pi-buttons.git
+The node-pi-buttons module and pi-buttons service are an drop in replacement for
+the [rpi-gpio-buttons](https://github.com/bnielsen1965/rpi-gpio-buttons) module.
+In applications where the CPU resources are limited, I.E. the Raspberry Pi Zero,
+the node-pi-buttons + pi-buttons solution will provide a more efficient and responsive
+user interface when compared to the pure Javascript rpi-gpio-buttons module.
+
+## links
+- https://github.com/bnielsen1965/pi-buttons.git
+- https://github.com/bnielsen1965/rpi-gpio-buttons.git
 
 
-## installation
+# installation
 ```shell
 npm install --save node-pi-buttons
 ```
 
 
 ## requirements
-pi-buttons: The pi-buttons service must be installed and configured on the target
-hardware.
+[pi-buttons](https://github.com/bnielsen1965/pi-buttons.git):
+The pi-buttons service must be installed and configured on the target hardware.
 
 
-## configuration
+# configuration
 When creating an instance of the node-pi-buttons module you can pass the following
 parameters:
 
@@ -29,7 +40,7 @@ parameters:
 reconnect if the Unix socket connection is lost.
 
 
-## example
+# example
 An example implementation is included in the example directory.
 
 ```javascript
@@ -56,7 +67,7 @@ myNPB
 ```
 
 
-## events
+# events
 The package provides a variety of high level button events to which an
 application can bind. Each event that is emitted includes the GPIO number that
 generated the event and a JSON packet received from pi-buttons.
