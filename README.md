@@ -9,7 +9,7 @@ The pi-buttons project is a low level service written in C that emits button
 events on a Unix socket for GPIO pins with button hardware. The node-pi-buttons
 module provides a ready made nodejs interface to the pi-buttons service.
 
-The node-pi-buttons module and pi-buttons service are an drop in replacement for
+The node-pi-buttons module and pi-buttons service are a drop in replacement for
 the [rpi-gpio-buttons](https://github.com/bnielsen1965/rpi-gpio-buttons) module.
 In applications where the CPU resources are limited, I.E. the Raspberry Pi Zero,
 the node-pi-buttons + pi-buttons solution will provide a more efficient and responsive
@@ -63,6 +63,39 @@ myNPB
 })
 .on('double_clicked', function (gpio, data) {
   console.log('DOUBLE_CLICKED', gpio, JSON.stringify(data, null, 2));
+});
+```
+
+
+# destroying node-pi-buttons socket
+A method is provided to destroy the connection to the pi-buttons unix socket.
+This can be used when an application exits to ensure there are no orphaned socket
+connections.
+
+```Javascript
+myNPB.destroySocket();
+```
+
+The pi-buttons service limits the number of accepted socket connections. If an
+application does not cleanly destroy a connection after exiting there is a potential
+to temporarily exhaust the available socket connections. The operating system
+will eventually close the orphaned connections but the preferred method is to
+cleanly destroy the connections when an application exits.
+
+One case where orphaned socket connections may occur is when htheitting Ctrl-C to
+stop a running application. The following example code will capture the break signal
+and cleanly destroy the socket before exiting...
+
+```Javascript
+const npb = require('node-pi-buttons');
+
+// create with default config
+let myNPB = npb();
+
+// cleanly destroy socket connection
+process.on('SIGINT', function() {
+  myNPB.destroySocket();
+  process.exit();
 });
 ```
 

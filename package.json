@@ -1,6 +1,6 @@
 {
   "name": "node-pi-buttons",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Node module used with the low level pi-buttons service for button events.",
   "main": "index.js",
   "scripts": {

@@ -8,18 +8,24 @@ module.exports = function (config) {
   config.socketPath = config.socketPath || SOCKET_PATH;
   config.reconnectTimeout = config.reconnectTimeout || RECONNECT_TIMEOUT;
   let emitter = new events.EventEmitter();
+  emitter.piButtonsSocket = null;
+
+  // expose function to destroy underlying socket
+  emitter.destroySocket = function () {
+    emitter.piButtonsSocket.destroy();
+  }
 
   // create client connected to pi-buttons socket path
   function createClient() {
-    let newClient = net.createConnection(config.socketPath, function () {
+    emitter.piButtonsSocket = net.createConnection(config.socketPath, function () {
       // on first connect establish client listening events
-      clientListener(newClient);
+      clientListener(emitter.piButtonsSocket);
     });
   }
 
   // create listeners on client socket connection
-  function clientListener(newClient) {
-    newClient
+  function clientListener(piButtonsSocket) {
+    piButtonsSocket
     .on('end', function () {
       // lost connection, try to reconnect after a delay
       setTimeout(createClient, config.reconnectTimeout);
